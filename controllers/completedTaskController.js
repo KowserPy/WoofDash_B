@@ -1,10 +1,10 @@
 const mongoose = require("mongoose");
 const CompletedTask = require("../models/completedTasks");
 const Points = require("../models/Points");
-const Task = require("../models/task");
 const User = require("../models/User");
 const asyncHandler = require("../utils/asyncHandler");
 const CustomError = require("../utils/customError");
+const Task = require("../models/Task");
 
 exports.completeTask = asyncHandler(async (req, res) => {
 	const userId = req.user._id;

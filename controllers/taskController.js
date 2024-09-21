@@ -1,4 +1,4 @@
-const Task = require("../models/task");
+const Task = require("../models/Task");
 const asyncHandler = require("../utils/asyncHandler");
 const CustomError = require("../utils/customError");
 
