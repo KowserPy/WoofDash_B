@@ -57,3 +57,30 @@ exports.completeTask = asyncHandler(async (req, res) => {
 		message: "Task completed successfully",
 	});
 });
+
+// Function to get completed tasks by a user
+exports.getCompletedTasksByUser = asyncHandler(async (req, res) => {
+	const userId = req.user._id; // Assuming user is authenticated and req.user._id exists
+
+	// Find all completed tasks for the user
+	const completedTasks = await CompletedTask.find({ userId }).populate("taskId", "title points"); // Populate taskId with task details (optional)
+
+	// If there are no completed tasks, return an empty array
+	if (!completedTasks.length) {
+		return res.status(200).json({ message: "No tasks completed yet", tasks: [] });
+	}
+
+	// Extract tasks information from the completedTasks array
+	const tasks = completedTasks.map((completedTask) => ({
+		_id: completedTask.taskId._id,
+		title: completedTask.taskId.title,
+		points: completedTask.taskId.points,
+		completedAt: completedTask.createdAt,
+	}));
+
+	// Return the completed tasks
+	res.status(200).json({
+		message: "Completed tasks retrieved successfully",
+		tasks,
+	});
+});
